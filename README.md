@@ -1,2 +1,2 @@
 # cottus-ai.github.io
-Cottus AI ecosystem website, documentation hub, and project index
+Cottus ecosystem website, documentation hub, and project index
