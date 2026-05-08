@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { paths } from '@/sitePaths'
 import { ArrowUpRight, Layers, Terminal, BookOpen } from 'lucide-react'
 
-const KERNL_REPO = 'https://github.com/cottus-ai/kernl'
+const AKERNL_REPO = 'https://github.com/cottus-ai/akernl'
 
 const toc = [
   { id: 'docs-overview', label: 'Overview' },
@@ -279,7 +279,7 @@ function PillarVisual({ pillar }: { pillar: string }) {
 function DocConceptCard({ topic }: { topic: DocTopic }) {
   return (
     <a
-      href={KERNL_REPO}
+      href={AKERNL_REPO}
       target="_blank"
       rel="noopener noreferrer"
       className="group flex gap-4 p-5 border border-lime-950/12 bg-white hover:border-lime-400/65 hover:bg-lime-50/40 transition-colors shadow-[0_12px_32px_-24px_rgba(65,104,28,0.35)] min-h-[9.5rem]"
@@ -338,7 +338,7 @@ function TocNav({ className = '' }: { className?: string }) {
         Org doc hub
       </Link>
       <a
-        href={`${KERNL_REPO}#readme`}
+        href={`${AKERNL_REPO}#readme`}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-2 block text-[11px] font-mono text-neutral-500 hover:text-neutral-950 underline decoration-lime-950/25 underline-offset-2"
@@ -367,7 +367,7 @@ export default function DocsPreview() {
             </h2>
             <p className="text-base text-neutral-600 max-w-2xl leading-relaxed mb-6">
               How to invoke the sandbox from Python or TypeScript, what happens under the hood in a coarse sense, and
-              which architectural notes to read inside the kernl repo next.
+              which architectural notes to read inside the akernl repo next.
             </p>
           </div>
           <div className="lg:hidden mb-12">
@@ -389,7 +389,7 @@ export default function DocsPreview() {
                 <p className="text-sm text-neutral-600 leading-relaxed mb-8">
                   Import <span className="font-mono text-neutral-800">akernl</span>, allocate a{' '}
                   <span className="font-mono text-neutral-800">Sandbox</span>, and send small code snippets execution in
-                  a Firecracker-backed guest. The REST or library surface you glue in front is yours; kernl owns the{' '}
+                  a Firecracker-backed guest. The REST or library surface you glue in front is yours; the akernl stack owns the{' '}
                   pool, isolation, recycle path, and observable failure semantics.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-6 text-sm border-t border-lime-950/10 pt-6">
@@ -470,11 +470,11 @@ export default function DocsPreview() {
                     Architecture topics
                   </p>
                   <h3 className="font-display text-xl font-medium text-neutral-950 tracking-tight">
-                    Deepening in the kernl repo
+                    Deepening in the akernl repo
                   </h3>
                 </div>
                 <p className="text-xs text-neutral-500 max-w-sm leading-relaxed">
-                  Cards expand on design decisions referenced in README. Selecting one opens kernl until we inline those
+                  Cards expand on design decisions referenced in README. Selecting one opens the GitHub repo until we inline those
                   write-ups locally.
                 </p>
               </div>

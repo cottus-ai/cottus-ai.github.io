@@ -24,7 +24,7 @@ const fleetSurface: FleetRepoLine[] = [
   {
     slug: 'agent-kernl',
     sdkShort: 'akernl',
-    href: 'https://github.com/cottus-ai/kernl',
+    href: 'https://github.com/cottus-ai/akernl',
     lane: 'EXEC',
     hint: '.krn bundles · sub-50ms boot · 0 deps',
   },

@@ -47,12 +47,12 @@ export default function AkernlHero() {
           >
             Agent runtime · imports <span className="text-neutral-700">akernl</span> · repo{' '}
             <a
-              href="https://github.com/cottus-ai/kernl"
+              href="https://github.com/cottus-ai/akernl"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-800 underline decoration-lime-950/25 underline-offset-2 hover:text-neutral-950 hover:decoration-neutral-950"
             >
-              cottus-ai/kernl
+              cottus-ai/akernl
             </a>
           </motion.p>
 
@@ -106,7 +106,7 @@ export default function AkernlHero() {
             transition={{ duration: 0.45, delay: 0.16 }}
           >
             <a
-              href="https://github.com/cottus-ai/kernl"
+              href="https://github.com/cottus-ai/akernl"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-400 text-neutral-950 text-sm font-semibold hover:bg-lime-300 transition-colors border border-neutral-950/15"

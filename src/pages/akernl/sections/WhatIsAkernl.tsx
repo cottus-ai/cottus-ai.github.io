@@ -15,15 +15,14 @@ export default function WhatIsAkernl() {
               <span className="font-medium text-neutral-950">agent-kernl</span> is the runtime product (
               <span className="font-mono text-neutral-800">akernl</span> on PyPI today). Sources live at{' '}
               <a
-                href="https://github.com/cottus-ai/kernl"
+                href="https://github.com/cottus-ai/akernl"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-neutral-900 underline decoration-lime-950/30 underline-offset-2 hover:decoration-neutral-950"
               >
-                cottus-ai/kernl
+                cottus-ai/akernl
               </a>
-              . When the rename lands, expect the repository to move to{' '}
-              <span className="font-mono text-neutral-800">cottus-ai/akernl</span>.
+              .
             </p>
             <p className="text-base text-neutral-800 leading-8">
               It is an open source runtime platform for safely executing AI generated and untrusted code inside

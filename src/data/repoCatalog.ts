@@ -18,7 +18,7 @@ export const repoCatalog: RepoCatalogItem[] = [
     siteSlug: 'akernl',
     sdkShort: 'akernl',
     visibility: 'Public',
-    href: 'https://github.com/cottus-ai/kernl',
+    href: 'https://github.com/cottus-ai/akernl',
     language: 'Python',
     license: 'MIT License',
     description:
