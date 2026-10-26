@@ -3,19 +3,316 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Cottus: open infrastructure for agents and models (agent-kernl/akernl, cottus-runtime, argus). Public code, plain licenses." />
-    <meta name="theme-color" content="#ecfccb" />
-    <title>Cottus · Systems code for agents and models</title>
-    <link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Cottus: hands and permissions for AI agents on Linux</title>
+    <meta name="description" content="The agents you already use work your Linux apps and browser through Cottus. Every action is checked against your policy, sensitive ones wait for your approval, and all of it is logged." />
+    <!-- @head -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/art/header-1920.webp"
+      imagesrcset="/art/header-1280.webp 1280w, /art/header-1920.webp 1920w, /art/header-2560.webp 2560w, /art/header-3840.webp 3840w"
+      imagesizes="100vw"
+      fetchpriority="high"
     />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body data-page="cottus">
+    <!-- @nav -->
+
+    <div class="art art--strip">
+      <img
+        src="/art/header-1920.webp"
+        srcset="/art/header-1280.webp 1280w, /art/header-1920.webp 1920w, /art/header-2560.webp 2560w, /art/header-3840.webp 3840w"
+        sizes="100vw"
+        alt=""
+        width="3840"
+        height="1060"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+
+    <main>
+    <section class="hero">
+      <div class="wrap grid">
+        <div class="hero__copy">
+          <h1 class="hero__title">Hands and permissions for AI agents on the Linux desktop.</h1>
+          <p class="hero__body">The agents you already use work your apps and your browser through Cottus. Every action is checked against your policy, anything sensitive waits for your yes, and all of it is written down.</p>
+        </div>
+        <div class="hero__aside">
+          <div class="actions">
+            <a class="plate-button" href="https://x.com/CottusAI" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">Follow the build <!-- @plate --></span>
+            </a>
+            <a class="text-link" href="#demo">See it work <!-- @down --></a>
+          </div>
+          <p class="fineprint">Works with Claude Code, Codex, Cursor and any MCP client. In early development, on GNOME first.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="demo" aria-labelledby="demo-title">
+      <div class="wrap">
+        <div class="grid" style="align-items: end">
+          <div class="left">
+            <h2 class="h2" id="demo-title">Your agent asks.<br />Cottus checks.<br />You decide.</h2>
+          </div>
+          <div class="right">
+            <p class="intro-text">Here's how a session goes. Claude Code drives Text Editor by element id. Each call passes your policy, and the one that reads a document stops for your approval.</p>
+          </div>
+        </div>
+
+        <div class="panel terminal">
+          <div class="panel__bar">
+            <span>Claude Code, connected through cottus mcp</span>
+            <button type="button" id="replay" hidden>Replay</button>
+          </div>
+          <ol class="script" id="script" aria-label="Example session">
+            <li class="row"><span class="who">you</span><span class="say">Open Text Editor and start today's standup notes in a new tab.</span></li>
+            <li class="gap" aria-hidden="true"></li>
+            <li class="row"><span class="who">claude</span><span class="cap">apps_open</span><span class="args">{"app": "Text Editor"}</span><span class="tag tag--allow">allowed</span></li>
+            <li class="row"><span class="who">claude</span><span class="cap">apps_snapshot</span><span class="args">{"app": "Text Editor", "role": "button"}</span><span class="tag tag--allow">allowed</span></li>
+            <li class="row"><span class="who"></span><span class="out">[4.2] button   "New Tab"</span></li>
+            <li class="row"><span class="who">claude</span><span class="cap">apps_press</span><span class="args">{"id": "4.2"}</span><span class="tag tag--allow">allowed</span></li>
+            <li class="row"><span class="who">claude</span><span class="cap">apps_snapshot</span><span class="args">{"app": "Text Editor"}</span><span class="tag tag--allow">allowed</span></li>
+            <li class="row"><span class="who"></span><span class="out">[5.7] text     ""  (0 characters, not shown)</span></li>
+            <li class="row"><span class="who"></span><span class="out">[5.3] text     (1,204 characters, not shown)</span></li>
+            <li class="row"><span class="who">claude</span><span class="cap">apps_set_text</span><span class="args">{"id": "5.7", "text": "Standup, 26 Oct\n- …"}</span><span class="tag tag--allow">allowed</span></li>
+            <li class="gap" aria-hidden="true"></li>
+            <li class="row"><span class="who">you</span><span class="say">Pull anything I left open from yesterday's notes.</span></li>
+            <li class="gap" aria-hidden="true"></li>
+            <li class="row"><span class="who">claude</span><span class="cap">apps_read_text</span><span class="args">{"id": "5.3"}</span><span class="tag tag--ask">asks you</span></li>
+            <li class="dialog-row">
+              <div class="dialog" role="img" aria-label="Approval dialog: claude-code wants to read a document in Text Editor. Deny or Approve.">
+                <strong>claude-code</strong> wants to read the text of a document in Text Editor.
+                <code>apps_read_text {"id": "5.3"}</code>
+                <div class="dialog__buttons"><span>Deny</span><span>Approve</span></div>
+              </div>
+            </li>
+            <li class="row"><span class="who"></span><span class="say"><span class="tag--yes">approved by you</span><span class="out">, the agent reads it and carries on</span></span></li>
+            <li class="gap" aria-hidden="true"></li>
+            <li class="log">~/.local/state/cottus/audit.jsonl</li>
+            <li class="log">{"ts_ms":1792991527412,"agent":"claude-code","capability":"apps_read_text","args":{"id":"5.3"},"outcome":"ok","detail":"approved by the user"}</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="grid">
+          <div class="left">
+            <h2 class="h2" id="how-title">Not another agent.<br />The layer under yours.</h2>
+          </div>
+          <div class="right">
+            <p class="intro-text">Cottus doesn't decide what to do. It gives the agents you already trust a way to reach your desktop, and you a say in every step.</p>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="step__n">01</span>
+            <h3 class="h3">Your agent connects</h3>
+            <p>Claude Code, Codex, Cursor or any MCP client adds Cottus with one line, and sees every capability as a native tool.</p>
+            <p><code class="cmdline">claude mcp add cottus -- cottus mcp</code></p>
+          </div>
+          <div class="step">
+            <span class="step__n">02</span>
+            <h3 class="h3">Cottus checks every call</h3>
+            <p>A small daemon on a per-user socket matches each call against your policy, asks you before anything sensitive, and appends it to the log under the agent's name.</p>
+          </div>
+          <div class="step">
+            <span class="step__n">03</span>
+            <h3 class="h3">It acts on your desktop</h3>
+            <p>Apps through accessibility, by element id. Your own Chrome through an extension. Screenshots and real input only as a last resort, with the desktop's consent.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="can" aria-labelledby="can-title">
+      <div class="wrap grid split">
+        <figure class="spot left">
+          <img src="/art/spot-hand-800.webp" srcset="/art/spot-hand-800.webp 800w, /art/spot-hand-1200.webp 1200w" sizes="(max-width: 860px) 22rem, 30rem" alt="" width="1600" height="1600" loading="lazy" decoding="async" />
+        </figure>
+        <div class="right">
+          <h2 class="h2" id="can-title">What agents can do today</h2>
+          <dl class="list">
+            <div><dt>Desktop apps</dt><dd>See a window's controls, press, fill fields and open apps, through accessibility. Ids like <code>3.12</code>, not pixels.</dd></div>
+            <div><dt>Your browser</dt><dd>Work in your own Chrome, with your logins, by element id. A site you haven't allowed asks first.</dd></div>
+            <div><dt>Any other app</dt><dd>A screenshot, then real clicks and keys, after the desktop's own consent dialog.</dd></div>
+            <div><dt>Approvals</dt><dd>Anything sensitive opens a dialog naming the agent, the action and its arguments.</dd></div>
+            <div><dt>Watch mode</dt><dd>Super+Escape stops every agent. They wait while you type, and the control about to be used is outlined.</dd></div>
+            <div><dt>Dashboard</dt><dd>One local page: what's waiting for you, what's running, what was held back, and what each agent did.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="policy" aria-labelledby="policy-title">
+      <div class="wrap grid">
+        <div class="left">
+          <h2 class="h2" id="policy-title">You write the rules.</h2>
+          <p class="intro-text">Allow, ask or deny, for any capability, pattern, website or app. Reading and reversible changes are allowed by default; anything sensitive asks.</p>
+          <p class="intro-text">An exact rule beats a pattern. A broken file stops the daemon instead of guessing. Password managers and the keyring are always off limits.</p>
+          <div class="legend">
+            <span><b class="c-ok">allow</b>just do it</span>
+            <span><b class="c-str">ask</b>show me first</span>
+            <span><b class="c-deny">deny</b>never</span>
+          </div>
+        </div>
+        <div class="right">
+          <div class="panel">
+            <div class="panel__bar">~/.config/cottus/policy.toml</div>
+<pre><code><span class="c-key">[rules]</span>
+<span class="c-str">"apps_press"</span>     = <span class="c-str">"ask"</span>     <span class="c-com"># confirm app clicks</span>
+<span class="c-str">"web_click"</span>      = <span class="c-str">"ask"</span>
+<span class="c-str">"screen_*"</span>       = <span class="c-deny">"deny"</span>    <span class="c-com"># no screenshots at all</span>
+<span class="c-str">"apps_snapshot"</span>  = <span class="c-ok">"allow"</span>
+
+<span class="c-key">[sites]</span>
+allow = [<span class="c-str">"github.com"</span>, <span class="c-str">"linear.app"</span>]
+deny  = [<span class="c-str">"mybank.example"</span>]  <span class="c-com"># never read or act here</span>
+
+<span class="c-key">[deny_apps]</span>
+names = [<span class="c-str">"Signal"</span>]         <span class="c-com"># never read or drive these</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="never" aria-labelledby="never-title">
+      <div class="wrap grid split">
+        <div class="left" style="grid-column: 1 / span 6">
+          <h2 class="h2" id="never-title">What Cottus will not do</h2>
+          <ul class="never">
+            <li><strong>Read your documents in passing.</strong> A snapshot shows how long a document is, never what it says. Reading it takes your approval.</li>
+            <li><strong>Touch passwords or card numbers.</strong> Those fields are never read and never typed into. Cookies and browser storage aren't exposed at all.</li>
+            <li><strong>Overwrite your work.</strong> Writing goes into single-line fields and empty text areas. Replacing a document's text asks first.</li>
+            <li><strong>Let an agent approve itself.</strong> The dialog is drawn by your desktop. The dashboard can't approve a request or change the policy, on purpose.</li>
+            <li><strong>Listen on the network.</strong> The daemon uses a socket only you can reach, and the dashboard answers on 127.0.0.1 alone.</li>
+          </ul>
+        </div>
+        <figure class="spot" style="grid-column: 8 / span 5">
+          <img src="/art/spot-anemone-800.webp" srcset="/art/spot-anemone-800.webp 800w, /art/spot-anemone-1200.webp 1200w" sizes="(max-width: 860px) 22rem, 30rem" alt="" width="1600" height="1600" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="status" aria-labelledby="status-title">
+      <div class="wrap">
+        <div class="grid">
+          <div class="left">
+            <h2 class="h2" id="status-title">Where it is</h2>
+          </div>
+          <div class="right">
+            <p class="intro-text">Built one usable step at a time. GNOME on Wayland is the first target.</p>
+          </div>
+        </div>
+        <div class="phases">
+          <div>
+            <h3>Working now</h3>
+            <ol>
+              <li class="done"><span>0</span><div><strong>Foundation.</strong> Daemon, policy, audit log, the <code>cottus</code> command.</div></li>
+              <li class="done"><span>1</span><div><strong>See and act.</strong> Snapshot an app's controls with ids, act by id, open apps.</div></li>
+              <li class="done"><span>2</span><div><strong>Agents connect.</strong> MCP server, approval dialogs for sensitive actions.</div></li>
+              <li class="done"><span>3</span><div><strong>Watch mode.</strong> Stop key, pause while you type, outline; screen and input fallback.</div></li>
+              <li class="done"><span>4</span><div><strong>Web.</strong> A Chrome extension in your own browser profile.</div></li>
+              <li class="done"><span>5</span><div><strong>Dashboard.</strong> Live activity, approvals, permissions, history.</div></li>
+            </ol>
+          </div>
+          <div>
+            <h3>Next</h3>
+            <ol>
+              <li><span>6</span><div><strong>Brain and memory.</strong> Plain-language tasks through your own agent's CLI; memory shared across agents; calendar, media and file search.</div></li>
+              <li><span>7</span><div><strong>Version 1.0.</strong> Packages, docs and a security review.</div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap grid faq">
+        <div class="left">
+          <h2 class="h2" id="faq-title">Questions</h2>
+        </div>
+        <div class="right">
+          <details>
+            <summary>Is Cottus an agent?</summary>
+            <p>No. It doesn't plan or decide anything. It's the layer the agents you already use go through to reach your desktop: it checks each call against your policy, asks you when it matters, and keeps the record.</p>
+          </details>
+          <details>
+            <summary>Which agents work with it?</summary>
+            <p>Any MCP client. Claude Code, Codex and Cursor connect with one command each, and every call is logged under the agent's own name.</p>
+          </details>
+          <details>
+            <summary>How do I stop it?</summary>
+            <p>Press Super+Escape or run <code>cottus stop</code>. Nothing acts again until <code>cottus resume</code>, and the stop survives a restart. Agents also wait while you're typing.</p>
+          </details>
+          <details>
+            <summary>Can an agent approve its own request?</summary>
+            <p>No. Approvals come from a dialog your desktop draws, which an agent can't answer. Deny, closing it, or no answer within 60 seconds all refuse the action.</p>
+          </details>
+          <details>
+            <summary>What if an app has no accessibility support?</summary>
+            <p>Cottus falls back to a screenshot and real pointer and keyboard input. All of it is sensitive, so it asks you, and the first use needs the desktop's own consent.</p>
+          </details>
+          <details>
+            <summary>When can I use it?</summary>
+            <p>It's in early development. Desktop apps, the browser, approvals and the dashboard work today. Follow @CottusAI for the first release.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="more" aria-labelledby="more-title">
+      <div class="wrap">
+        <div class="grid">
+          <div class="left">
+            <h2 class="h2" id="more-title">More from Cottus AI</h2>
+          </div>
+          <div class="right">
+            <p class="intro-text">Open infrastructure for agents and models. Each project is public on GitHub under a plain license.</p>
+          </div>
+        </div>
+        <div class="projects">
+          <a class="project" href="/akernl/">
+            <img src="/art/spot-akernl-400.webp" alt="" width="400" height="400" loading="lazy" decoding="async" />
+            <h3 class="h3">akernl</h3>
+            <p>A self-hosted sandbox API. Run untrusted code in Firecracker microVMs with one HTTP call.</p>
+            <span class="fineprint">MIT · Python</span>
+          </a>
+          <a class="project" href="/cottus-runtime/">
+            <img src="/art/spot-runtime-400.webp" alt="" width="400" height="400" loading="lazy" decoding="async" />
+            <h3 class="h3">Cottus Runtime</h3>
+            <p>A C++/CUDA inference engine for Llama models, with Python bindings and its own KV cache.</p>
+            <span class="fineprint">Apache-2.0 · C++, CUDA</span>
+          </a>
+          <a class="project" href="/argus/">
+            <img src="/art/spot-argus-400.webp" alt="" width="400" height="400" loading="lazy" decoding="async" />
+            <h3 class="h3">argus</h3>
+            <p>Lightweight tracing for Python ML workloads. Spans in, a Chrome trace out.</p>
+            <span class="fineprint">Apache-2.0 · Python</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closing" aria-labelledby="closing-title">
+      <div class="wrap grid">
+        <h2 class="closing__line" id="closing-title">Give your agents hands.<br />Keep the keys.</h2>
+        <div class="closing__copy">
+          <p>Cottus is named for one of the hundred-handed giants of Greek myth. These hands answer to you.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://x.com/CottusAI" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">Follow the build <!-- @plate --></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <!-- @footer -->
   </body>
 </html>

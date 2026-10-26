@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cottus Runtime: a C++/CUDA inference engine for Llama models</title>
+    <meta name="description" content="Cottus Runtime is an LLM inference engine written from scratch in C++ and CUDA for Llama architectures, with paged KV cache, its own attention kernels and a Python API. Output matches Hugging Face Transformers token for token." />
+    <!-- @head -->
+  </head>
+  <body data-page="runtime">
+    <!-- @nav -->
+
+    <main>
+    <section class="page-hero">
+      <div class="wrap grid">
+        <div class="page-hero__copy">
+          <h1 class="page-hero__name">Cottus Runtime</h1>
+          <p class="page-hero__lede">An inference engine for Llama models, in C++ and CUDA, with Python bindings.</p>
+          <p class="page-hero__body">Written from scratch for low latency and strict control of memory. It runs its own transformer pipeline, KV cache and attention kernels, and its output matches Hugging Face Transformers token for token.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://github.com/cottus-ai/cottus-runtime" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">View on GitHub <!-- @plate --></span>
+            </a>
+            <a class="text-link" href="#install">Install <!-- @down --></a>
+          </div>
+          <p class="fineprint">Apache-2.0 · C++, CUDA, Python · on PyPI as <code>cottus</code></p>
+        </div>
+        <figure class="spot">
+          <img src="/art/spot-runtime-800.webp" srcset="/art/spot-runtime-800.webp 800w, /art/spot-runtime-1200.webp 1200w" sizes="(max-width: 860px) 11rem, 26rem" alt="" width="1600" height="1600" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="inside" aria-labelledby="inside-title">
+      <div class="wrap grid" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="inside-title">What's inside</h2>
+          <p class="intro-text">No borrowed inference stack. Every part of the forward pass is the engine's own, and checked against the reference implementation.</p>
+        </div>
+        <div class="right">
+          <dl class="list" style="margin-top: 0">
+            <div><dt>Core</dt><dd>A transformer implementation in modern C++.</dd></div>
+            <div><dt>Memory</dt><dd>PagedAttention with a block allocator, so the KV cache grows in fixed blocks instead of one large buffer.</dd></div>
+            <div><dt>Compute</dt><dd>CUDA kernels for attention and RoPE; matrix multiplies through cuBLAS.</dd></div>
+            <div><dt>Parity</dt><dd>Generated tokens match Hugging Face Transformers exactly, verified.</dd></div>
+            <div><dt>Interface</dt><dd>A Python API through PyBind11.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="models" aria-labelledby="models-title">
+      <div class="wrap grid" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="models-title">Supported models</h2>
+          <p class="intro-text">Each architecture listed as verified matches Hugging Face Transformers exactly.</p>
+        </div>
+        <div class="right">
+          <div class="table-wrap" style="margin-top: 0">
+            <table class="table">
+              <thead><tr><th>Architecture</th><th>Models</th><th>Precision</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Llama</td><td>Llama 2 (7B, 13B, 70B), Llama 3 (8B, 70B)</td><td>FP16, FP32</td><td class="c-ok">Verified</td></tr>
+                <tr><td>TinyLlama</td><td>TinyLlama-1.1B</td><td>FP16, FP32</td><td class="c-ok">Verified</td></tr>
+                <tr><td>Mistral</td><td>Mistral 7B</td><td>FP16</td><td class="c-str">In progress</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap grid grid--code" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="install-title">Install</h2>
+          <p class="intro-text">You'll want an NVIDIA GPU with CUDA 11 or 12. There's a CPU fallback, but it's slow.</p>
+          <dl class="list" style="margin-top: 1.5rem">
+            <div><dt>Compiler</dt><dd>GCC 10+ or Clang 12+</dd></div>
+            <div><dt>Build</dt><dd>CMake 3.18+</dd></div>
+            <div><dt>Python</dt><dd>3.8 or newer</dd></div>
+          </dl>
+        </div>
+        <div class="right">
+          <div class="cmd">
+            <code><span>$ </span>pip install cottus</code>
+            <button type="button" data-copy="pip install cottus">Copy</button>
+          </div>
+          <div class="cmd">
+            <code><span>$ </span>uv add cottus</code>
+            <button type="button" data-copy="uv add cottus">Copy</button>
+          </div>
+          <div class="panel" style="margin-top: 1.25rem">
+            <div class="panel__bar"><span>generate.py</span></div>
+<pre><code><span class="c-key">from</span> cottus <span class="c-key">import</span> Engine, EngineConfig
+<span class="c-key">from</span> cottus.model <span class="c-key">import</span> load_hf_model
+
+weights, _, _, tokenizer, _ = load_hf_model(
+    <span class="c-str">"TinyLlama/TinyLlama-1.1B-Chat-v1.0"</span>, device=<span class="c-str">"cuda"</span>
+)
+
+config = EngineConfig()
+config.model_type = <span class="c-str">"llama"</span>
+config.hidden_dim = 2048
+config.num_layers = 22
+config.num_heads = 32
+config.num_kv_heads = 4
+config.head_dim = 64
+config.intermediate_dim = 5632
+config.device = <span class="c-str">"cuda"</span>
+
+engine = Engine(config, weights)
+output_ids = engine.generate(tokenizer.encode(<span class="c-str">"Hello!"</span>), max_new_tokens=20)</code></pre>
+          </div>
+          <p class="intro-text">More in <a class="inline-link" href="https://github.com/cottus-ai/cottus-runtime/tree/main/examples" target="_blank" rel="noreferrer">examples/</a>: basic inference, the CPU path, a real chat with TinyLlama, and long context.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="next" aria-labelledby="next-title">
+      <div class="wrap grid" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="next-title">Planned</h2>
+          <p class="intro-text">Pull requests are welcome for any of these.</p>
+        </div>
+        <div class="right">
+          <ul class="never" style="margin-top: 0">
+            <li><strong>Many GPUs.</strong> Scale across GPUs and machines for larger models.</li>
+            <li><strong>More models.</strong> Native Mistral, Falcon and other families beyond Llama.</li>
+            <li><strong>A fast CPU path.</strong> Vectorized kernels and OpenMP for CPU-only inference.</li>
+            <li><strong>Quantization.</strong> Post-training quantization and INT8 kernels.</li>
+            <li><strong>FlashAttention-style kernels.</strong> Memory-efficient attention for lower latency.</li>
+            <li><strong>Plugins.</strong> Custom ops and other KV-cache strategies from the community.</li>
+            <li><strong>Tooling.</strong> Command-line tools for model conversion, benchmarks and profiling.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closing" aria-labelledby="closing-title">
+      <div class="wrap grid">
+        <h2 class="closing__line" id="closing-title">Every kernel in the open.</h2>
+        <div class="closing__copy">
+          <p>Cottus Runtime is Apache-2.0. Read it, benchmark it, and run it on your own GPUs.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://github.com/cottus-ai/cottus-runtime" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">View on GitHub <!-- @plate --></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <!-- @footer -->
+  </body>
+</html>

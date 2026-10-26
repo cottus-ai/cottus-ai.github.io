@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>akernl: self-hosted sandboxes for AI agent code</title>
+    <meta name="description" content="akernl is a self-hosted sandbox API for AI agent code execution in Firecracker microVMs. Run untrusted Python, Node.js, shell or Go with one HTTP call, on your own infrastructure." />
+    <!-- @head -->
+  </head>
+  <body data-page="akernl">
+    <!-- @nav -->
+
+    <main>
+    <section class="page-hero">
+      <div class="wrap grid">
+        <div class="page-hero__copy">
+          <h1 class="page-hero__name">akernl</h1>
+          <p class="page-hero__lede">A self-hosted sandbox API for AI agent code, in Firecracker microVMs.</p>
+          <p class="page-hero__body">Run untrusted code (Python, Node.js, shell or Go) in an isolated sandbox with a single HTTP call. It runs on your own machines, so your data stays there.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://github.com/cottus-ai/akernl" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">View on GitHub <!-- @plate --></span>
+            </a>
+            <a class="text-link" href="#start">Get started <!-- @down --></a>
+          </div>
+          <p class="fineprint">MIT license · Python · 0.1</p>
+        </div>
+        <figure class="spot">
+          <img src="/art/spot-akernl-800.webp" srcset="/art/spot-akernl-800.webp 800w, /art/spot-akernl-1200.webp 1200w" sizes="(max-width: 860px) 11rem, 26rem" alt="" width="1600" height="1600" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="start" aria-labelledby="start-title">
+      <div class="wrap">
+        <div class="grid" style="align-items: end">
+          <div class="left">
+            <h2 class="h2" id="start-title">One call to a sandbox.</h2>
+          </div>
+          <div class="right">
+            <p class="intro-text">Start the server, send code, read the result. The sandbox keeps its state, so the next call picks up where this one stopped.</p>
+          </div>
+        </div>
+        <div class="panel terminal">
+          <div class="panel__bar"><span>terminal</span></div>
+<pre><code><span class="c-dim">$</span> export AKERNL_ROOT_KEY=my-root-key
+<span class="c-dim">$</span> akernl serve
+<span class="c-com">Listening on 0.0.0.0:8080</span>
+
+<span class="c-dim">$</span> curl -X POST http://localhost:8080/api/v1/sandboxes \
+    -H "x-api-key: $AKERNL_ROOT_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"initial_code": "print(2 + 2)", "initial_language": "python"}'
+
+{
+  <span class="c-key">"id"</span>: <span class="c-str">"sbx_01jx..."</span>,
+  <span class="c-key">"state"</span>: <span class="c-str">"active"</span>,
+  <span class="c-key">"initial_result"</span>: {
+    <span class="c-key">"status"</span>: <span class="c-ok">"success"</span>,
+    <span class="c-key">"stdout"</span>: <span class="c-str">"4\n"</span>,
+    <span class="c-key">"exit_code"</span>: 0,
+    <span class="c-key">"execution_time_ms"</span>: 38
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="why" aria-labelledby="why-title">
+      <div class="wrap grid">
+        <div class="left">
+          <h2 class="h2" id="why-title">Fast, isolated, and yours.</h2>
+        </div>
+        <div class="right">
+          <p class="intro-text" style="margin-top: 0">Most sandboxes for agent code are cloud-only, share the host's kernel through containers, or take seconds to cold-start.</p>
+          <p class="intro-text">akernl runs each tenant's sandboxes in Firecracker microVMs: isolated by hardware, booting in under 50 ms, with a pool of warm VMs ready to take a request at once. You own the runtime, and no data leaves your infrastructure.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="api" aria-labelledby="api-title">
+      <div class="wrap grid">
+        <div class="left">
+          <h2 class="h2" id="api-title">The API</h2>
+          <p class="intro-text">Five endpoints cover a sandbox's life: create it, run code and commands, move files in and out. Every request carries an API key.</p>
+          <p class="intro-text"><a class="inline-link" href="https://github.com/cottus-ai/akernl/blob/main/docs/api.md" target="_blank" rel="noreferrer">Full API reference</a></p>
+        </div>
+        <div class="right">
+          <dl class="list list--wide" style="margin-top: 0">
+            <div><dt><code>POST /api/v1/sandboxes</code></dt><dd>Create a sandbox, optionally running initial code.</dd></div>
+            <div><dt><code>POST …/:id/execute</code></dt><dd>Run code in the sandbox. State carries over between calls.</dd></div>
+            <div><dt><code>POST …/:id/command</code></dt><dd>Run a shell command.</dd></div>
+            <div><dt><code>PUT …/:id/files</code></dt><dd>Upload a file.</dd></div>
+            <div><dt><code>GET …/:id/files</code></dt><dd>Download a file.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="isolation" aria-labelledby="isolation-title">
+      <div class="wrap">
+        <div class="grid">
+          <div class="left">
+            <h2 class="h2" id="isolation-title">Choose how sealed.</h2>
+          </div>
+          <div class="right">
+            <p class="intro-text">Isolation level sets the boundary between sandboxes. Security mode sets what code inside may reach. Sandboxes start <code>restricted</code>.</p>
+          </div>
+        </div>
+        <div class="grid" style="margin-top: clamp(2rem, 4vw, 3rem); align-items: start">
+          <div class="left" style="grid-column: 1 / span 6">
+            <h3 class="label">Isolation levels, <code>AKERNL_ISOLATION_LEVEL</code></h3>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th>Level</th><th>Mechanism</th><th>Use when</th></tr></thead>
+                <tbody>
+                  <tr><td><code>process</code></td><td>chroot and cgroups</td><td>Low-trust internal code, most throughput</td></tr>
+                  <tr><td><code>microvm</code></td><td>Firecracker per tenant</td><td>Many tenants, strong isolation</td></tr>
+                  <tr><td><code>dedicated</code></td><td>One VM per execution</td><td>The highest security needs</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="right" style="grid-column: 7 / span 6">
+            <h3 class="label">Security modes, <code>AKERNL_SECURITY_MODE</code></h3>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th>Mode</th><th>Network</th><th>Filesystem</th><th>Packages</th></tr></thead>
+                <tbody>
+                  <tr><td><code>restricted</code></td><td>Blocked</td><td>Read-only except /tmp</td><td>Blocked</td></tr>
+                  <tr><td><code>standard</code></td><td>Outbound only</td><td>Writable workspace</td><td>Allowed</td></tr>
+                  <tr><td><code>full</code></td><td>Unrestricted</td><td>Unrestricted</td><td>Allowed</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sdk" aria-labelledby="sdk-title">
+      <div class="wrap grid grid--code" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="sdk-title">From Python</h2>
+          <p class="intro-text">The client opens a sandbox for the length of a <code>with</code> block, then cleans it up. Upload data, install packages, run code against both.</p>
+          <dl class="list" style="margin-top: 1.5rem">
+            <div><dt><code>python</code></dt><dd>CPython 3.12</dd></div>
+            <div><dt><code>nodejs</code></dt><dd>Node.js 20</dd></div>
+            <div><dt><code>shell</code></dt><dd>Bash</dd></div>
+            <div><dt><code>go</code></dt><dd>Go 1.22</dd></div>
+          </dl>
+        </div>
+        <div class="right">
+          <div class="panel">
+            <div class="panel__bar"><span>example.py</span></div>
+<pre><code><span class="c-key">from</span> akernl.sdk <span class="c-key">import</span> AkernlClient
+
+client = AkernlClient(
+    base_url=<span class="c-str">"http://localhost:8080"</span>,
+    api_key=<span class="c-str">"sk-..."</span>,
+)
+
+<span class="c-key">with</span> client.sandbox() <span class="c-key">as</span> sb:
+    result = sb.execute(<span class="c-str">"python"</span>, <span class="c-str">"print('hello')"</span>)
+    print(result.stdout)
+
+    sb.upload(<span class="c-str">"/data.csv"</span>, <span class="c-str">b"a,b\n1,2\n"</span>)
+    sb.install(<span class="c-str">"python"</span>, [<span class="c-str">"pandas"</span>])
+    result = sb.execute(
+        <span class="c-str">"python"</span>,
+        <span class="c-str">"import pandas as pd; print(pd.read_csv('/data.csv'))"</span>,
+    )
+    print(result.stdout)</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap grid grid--code" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="install-title">Install</h2>
+          <p class="intro-text">akernl installs from GitHub. The <code>serve</code> extra adds the REST API server.</p>
+          <p class="intro-text">
+            <a class="inline-link" href="https://github.com/cottus-ai/akernl/blob/main/docs/configuration.md" target="_blank" rel="noreferrer">Configuration</a>,
+            <a class="inline-link" href="https://github.com/cottus-ai/akernl/blob/main/docs/architecture.md" target="_blank" rel="noreferrer">architecture</a> and
+            <a class="inline-link" href="https://github.com/cottus-ai/akernl/blob/main/docs/sdk.md" target="_blank" rel="noreferrer">SDK reference</a>
+          </p>
+        </div>
+        <div class="right">
+          <div class="cmd">
+            <code><span>$ </span>pip install "akernl[serve] @ git+https://github.com/cottus-ai/akernl"</code>
+            <button type="button" data-copy='pip install "akernl[serve] @ git+https://github.com/cottus-ai/akernl"'>Copy</button>
+          </div>
+          <div class="panel" style="margin-top: 1.25rem">
+            <div class="panel__bar"><span>configuration, with defaults</span></div>
+<pre><code>AKERNL_HOST=0.0.0.0
+AKERNL_PORT=8080
+AKERNL_AUTH_REQUIRED=true
+AKERNL_ROOT_KEY=<span class="c-com">&lt;generated if unset&gt;</span>
+AKERNL_SECURITY_MODE=restricted
+AKERNL_ISOLATION_LEVEL=process
+AKERNL_POOL_MIN_IDLE=2
+AKERNL_POOL_MAX_SIZE=20
+AKERNL_SANDBOX_TTL=900
+AKERNL_FIRECRACKER_PATH=/usr/local/bin/firecracker</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closing" aria-labelledby="closing-title">
+      <div class="wrap grid">
+        <h2 class="closing__line" id="closing-title">Runtime infrastructure for AI should be open and self-hostable.</h2>
+        <div class="closing__copy">
+          <p>akernl is MIT licensed. Read the code, run it on your hardware, and send a pull request.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://github.com/cottus-ai/akernl" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">View on GitHub <!-- @plate --></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <!-- @footer -->
+  </body>
+</html>

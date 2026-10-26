@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>argus: lightweight tracing for Python ML workloads</title>
+    <meta name="description" content="argus is lightweight profiling and tracing for Python ML workloads: nested spans, a PyTorch decode tracer and KV-cache memory events, exported as a Chrome trace you can open in Perfetto. No dependencies." />
+    <!-- @head -->
+  </head>
+  <body data-page="argus">
+    <!-- @nav -->
+
+    <main>
+    <section class="page-hero">
+      <div class="wrap grid">
+        <div class="page-hero__copy">
+          <h1 class="page-hero__name">argus</h1>
+          <p class="page-hero__lede">Lightweight profiling and tracing for Python ML workloads.</p>
+          <p class="page-hero__body">Wrap the phases of a pipeline in spans, nest them, attach what you need to know, and export a Chrome trace you can open in Perfetto. It has no dependencies beyond Python.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://github.com/cottus-ai/argus" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">View on GitHub <!-- @plate --></span>
+            </a>
+            <a class="text-link" href="#use">See the code <!-- @down --></a>
+          </div>
+          <p class="fineprint">Apache-2.0 · Python 3.10+ · alpha</p>
+        </div>
+        <figure class="spot">
+          <img src="/art/spot-argus-800.webp" srcset="/art/spot-argus-800.webp 800w, /art/spot-argus-1200.webp 1200w" sizes="(max-width: 860px) 11rem, 26rem" alt="" width="1600" height="1600" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="use" aria-labelledby="use-title">
+      <div class="wrap grid grid--code" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="use-title">Spans in, a trace out.</h2>
+          <p class="intro-text">A tracer collects spans as your code runs. Each span has a name, a category and a scope, and they nest the way your calls do.</p>
+          <p class="intro-text">Load the exported file at <a class="inline-link" href="https://ui.perfetto.dev/" target="_blank" rel="noreferrer">ui.perfetto.dev</a> to see the timeline.</p>
+        </div>
+        <div class="right">
+          <div class="panel">
+            <div class="panel__bar"><span>basic_trace.py</span></div>
+<pre><code><span class="c-key">import</span> argus
+
+tracer = argus.Tracer()
+
+<span class="c-key">with</span> tracer.span(<span class="c-str">"full_pipeline"</span>, category=<span class="c-str">"phase"</span>, scope=<span class="c-str">"pipeline"</span>):
+    <span class="c-key">with</span> tracer.span(<span class="c-str">"preprocessing"</span>, category=<span class="c-str">"compute"</span>,
+                     scope=<span class="c-str">"pipeline.preprocess"</span>):
+        data = list(range(1000))
+    <span class="c-key">with</span> tracer.span(<span class="c-str">"inference"</span>, category=<span class="c-str">"compute"</span>,
+                     scope=<span class="c-str">"pipeline.inference"</span>):
+        result = sum(data)
+
+argus.export_chrome(tracer, <span class="c-str">"basic_trace.json"</span>)</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="parts" aria-labelledby="parts-title">
+      <div class="wrap grid" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="parts-title">Made for model code</h2>
+          <p class="intro-text">Beyond plain spans, argus ships hooks for the place where inference time and memory actually go.</p>
+        </div>
+        <div class="right">
+          <dl class="list" style="margin-top: 0">
+            <div><dt>Spans</dt><dd>Nested, timed with a monotonic nanosecond clock, with metadata you add as you go.</dd></div>
+            <div><dt>Decode</dt><dd><code>trace_generate</code> traces a PyTorch model's greedy decode: the prefill, then a span for every token.</dd></div>
+            <div><dt>KV cache</dt><dd><code>KVCacheTracker</code> records the cache's size after each token as memory events on the same timeline.</dd></div>
+            <div><dt>Export</dt><dd>Chrome Trace Format, which Perfetto and <code>chrome://tracing</code> both read.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-title">
+      <div class="wrap grid grid--code" style="align-items: start">
+        <div class="left">
+          <h2 class="h2" id="install-title">Install</h2>
+          <p class="intro-text">argus installs from GitHub. The PyTorch hooks need PyTorch; the core needs nothing else.</p>
+        </div>
+        <div class="right">
+          <div class="cmd">
+            <code><span>$ </span>pip install git+https://github.com/cottus-ai/argus</code>
+            <button type="button" data-copy="pip install git+https://github.com/cottus-ai/argus">Copy</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closing" aria-labelledby="closing-title">
+      <div class="wrap grid">
+        <h2 class="closing__line" id="closing-title">See where the time goes.</h2>
+        <div class="closing__copy">
+          <p>argus is Apache-2.0 and early. Issues and pull requests are welcome.</p>
+          <div class="actions">
+            <a class="plate-button" href="https://github.com/cottus-ai/argus" target="_blank" rel="noreferrer">
+              <span class="plate-button__label">View on GitHub <!-- @plate --></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <!-- @footer -->
+  </body>
+</html>
