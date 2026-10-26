@@ -16,12 +16,7 @@ export default function BrandMark({
 }) {
   const inner = (
     <>
-      <span
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[6px] border border-lime-950/22 bg-neutral-950 font-mono text-[13px] font-semibold leading-none text-[#bef264] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-        aria-hidden
-      >
-        C
-      </span>
+      <img src="/icon.svg" alt="" aria-hidden width={36} height={36} className="h-9 w-9 shrink-0 rounded-[6px]" />
       <span className="flex min-w-0 flex-wrap items-baseline gap-x-1.5">
         <span className="font-display text-lg font-semibold tracking-tight text-neutral-950 sm:text-xl">Cottus</span>
         {variant === 'nav' ? (
