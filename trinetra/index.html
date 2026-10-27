@@ -93,74 +93,39 @@
     </section>
 
     <section class="section" id="checks" aria-labelledby="checks-title">
-      <div class="wrap">
-        <div class="grid">
-          <div class="left">
-            <h2 class="h2" id="checks-title">What it checks today</h2>
-          </div>
-          <div class="right">
-            <p class="intro-text">Six detection engines, run by an agent that plans, acts, looks at what it found and plans again. Findings are deduplicated and tracked across runs, so a regression shows up as one.</p>
-          </div>
+      <div class="wrap grid" style="align-items: center">
+        <div class="left" style="grid-column: 1 / span 6">
+          <h2 class="h2" id="checks-title">What it checks today</h2>
+          <p class="intro-text">Six detection engines, run by an agent that plans, acts, looks at what it found and plans again. Findings are deduplicated and tracked across runs, so a regression shows up as one.</p>
+          <dl class="list">
+            <div><dt>Dependencies</dt><dd>Known vulnerabilities in the packages you ship, from the OSV database.</dd></div>
+            <div><dt>Committed secrets</dt><dd>Keys and tokens in your code, found offline and shown redacted.</dd></div>
+            <div><dt>Exposed files</dt><dd><code>.env</code> files, <code>.git</code> folders and cloud credentials served where they shouldn't be.</dd></div>
+            <div><dt>Security headers</dt><dd>Missing or weak headers on every service in scope.</dd></div>
+            <div><dt>Cookie flags</dt><dd>Session cookies without Secure, HttpOnly or SameSite.</dd></div>
+            <div><dt>Surface discovery</dt><dd>What is actually running, added to the asset graph with its coverage.</dd></div>
+          </dl>
         </div>
-        <div class="checks">
-          <div><h3 class="h3">Dependencies</h3><p>Known vulnerabilities in the packages you ship, from the OSV database.</p></div>
-          <div><h3 class="h3">Committed secrets</h3><p>Keys and tokens in your code, found offline and shown redacted.</p></div>
-          <div><h3 class="h3">Exposed files</h3><p><code>.env</code> files, <code>.git</code> folders and cloud credentials served where they shouldn't be.</p></div>
-          <div><h3 class="h3">Security headers</h3><p>Missing or weak headers on every service in scope.</p></div>
-          <div><h3 class="h3">Cookie flags</h3><p>Session cookies without Secure, HttpOnly or SameSite.</p></div>
-          <div><h3 class="h3">Surface discovery</h3><p>What is actually running, added to the asset graph with its coverage.</p></div>
-        </div>
+        <figure class="spot" style="grid-column: 8 / span 5">
+          <img src="/art/spot-magnifier-800.webp" srcset="/art/spot-magnifier-800.webp 800w, /art/spot-magnifier-1200.webp 1200w" sizes="(max-width: 860px) 22rem, 30rem" alt="" width="1600" height="1600" loading="lazy" decoding="async" />
+        </figure>
       </div>
     </section>
 
     <section class="section" id="onprem" aria-labelledby="onprem-title">
-      <div class="wrap grid" style="align-items: start">
-        <div class="left">
+      <div class="wrap grid split" style="align-items: center">
+        <figure class="spot left">
+          <img src="/art/spot-gate-800.webp" srcset="/art/spot-gate-800.webp 800w, /art/spot-gate-1200.webp 1200w" sizes="(max-width: 860px) 22rem, 30rem" alt="" width="1600" height="1600" loading="lazy" decoding="async" />
+        </figure>
+        <div class="right">
           <h2 class="h2" id="onprem-title">For teams that can't use a hosted scanner</h2>
           <p class="intro-text">Hosted scanners need your code, your traffic or your list of assets. Trinetra needs none of them to leave your network.</p>
-        </div>
-        <div class="right">
-          <dl class="list" style="margin-top: 0">
+          <dl class="list">
             <div><dt>Regulated</dt><dd>Fintech, health and government teams that can't send source, traffic or asset lists to a third party.</dd></div>
             <div><dt>Air-gapped</dt><dd>Works with any OpenAI-compatible model endpoint, including one you host, so nothing has to leave the network.</dd></div>
             <div><dt>Security teams</dt><dd>A standing assessment on your own infrastructure instead of a consultant once a quarter.</dd></div>
             <div><dt>Deployment</dt><dd>One program and a Postgres database, on a server or in Docker on your internal network.</dd></div>
           </dl>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="status" aria-labelledby="status-title">
-      <div class="wrap">
-        <div class="grid">
-          <div class="left">
-            <h2 class="h2" id="status-title">Where it is</h2>
-          </div>
-          <div class="right">
-            <p class="intro-text">The core loop works end to end today, from trigger to verified fix. The next steps widen what it can test.</p>
-          </div>
-        </div>
-        <div class="phases">
-          <div>
-            <h3>Working now</h3>
-            <ol>
-              <li class="done"><span>1</span><div><strong>Triggers:</strong> deploy, schedule, repository events, webhooks and manual runs.</div></li>
-              <li class="done"><span>2</span><div><strong>An agent</strong> that plans, acts, observes and re-plans.</div></li>
-              <li class="done"><span>3</span><div><strong>Six engines,</strong> with dedup and regression tracking.</div></li>
-              <li class="done"><span>4</span><div><strong>Fix pull requests</strong> for dependencies, then a verify run.</div></li>
-              <li class="done"><span>5</span><div><strong>Signed scope</strong> and a guard on every outbound connection.</div></li>
-              <li class="done"><span>6</span><div><strong>A triage dashboard,</strong> live events and the audit log.</div></li>
-            </ol>
-          </div>
-          <div>
-            <h3>Next</h3>
-            <ol>
-              <li><span>7</span><div><strong>A self-hosted model,</strong> tested end to end.</div></li>
-              <li><span>8</span><div><strong>A browser engine</strong> for logged-in and single-page apps.</div></li>
-              <li><span>9</span><div><strong>More checks:</strong> code, infrastructure as code and TLS.</div></li>
-              <li><span>10</span><div><strong>Early access,</strong> then release.</div></li>
-            </ol>
-          </div>
         </div>
       </div>
     </section>
