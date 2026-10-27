@@ -6,6 +6,8 @@
 
 The Cottus AI website: Cottus, Offprint, Trinetra, akernl, Cottus Runtime, argus and the project index.
 
+Live at https://cottus.org. The custom domain is set in the repository's Pages settings (not a CNAME file, since the site deploys from Actions); DNS is at Squarespace, and the domain is verified for the cottus-ai organisation.
+
 ```sh
 npm install
 npm run dev      # http://localhost:5173
