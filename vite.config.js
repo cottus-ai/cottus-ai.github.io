@@ -24,6 +24,7 @@ export default defineConfig({
       input: {
         home: `${root}index.html`,
         offprint: `${root}offprint/index.html`,
+        trinetra: `${root}trinetra/index.html`,
         akernl: `${root}akernl/index.html`,
         runtime: `${root}cottus-runtime/index.html`,
         argus: `${root}argus/index.html`,

@@ -1357,6 +1357,26 @@ main + .art {
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
+/* a grid of short items, each under its own top rule */
+.checks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.checks > div {
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.checks p {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
 .closing__soft {
   color: var(--cream);
 }
@@ -1505,6 +1525,11 @@ main + .art {
 @media (max-width: 860px) {
   .frames {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .checks {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.5rem;
   }
 
   .steps--4 {

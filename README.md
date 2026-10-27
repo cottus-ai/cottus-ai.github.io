@@ -4,7 +4,7 @@
 
 # cottus-ai.github.io
 
-The Cottus AI website: Cottus, Offprint, akernl, Cottus Runtime, argus and the project index.
+The Cottus AI website: Cottus, Offprint, Trinetra, akernl, Cottus Runtime, argus and the project index.
 
 ```sh
 npm install
@@ -17,7 +17,7 @@ npm run build    # static site in dist/, deployed by .github/workflows/deploy.ym
 | Path | Contents |
 |---|---|
 | `index.html` | Home: the Cottus product page |
-| `offprint/`, `akernl/`, `cottus-runtime/`, `argus/`, `projects/` | One page each |
+| `offprint/`, `trinetra/`, `akernl/`, `cottus-runtime/`, `argus/`, `projects/` | One page each |
 | `docs/`, `agent-kernl/` | Redirects from old URLs |
 | `src/site.css`, `src/site.js` | Shared styles and the small amount of script |
 | `src/partials/` | Nav, footer and icons, inserted where a page says `<!-- @name -->` (see `vite.config.js`) |
