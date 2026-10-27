@@ -1196,6 +1196,173 @@ main + .art {
   color: var(--brand);
 }
 
+/* Offprint */
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 1.3vw, 1rem);
+  line-height: 0;
+  color: var(--ink);
+}
+
+.lockup img {
+  flex: none;
+  width: clamp(3.4rem, 6.6vw, 5.6rem);
+  height: auto;
+}
+
+.lockup svg {
+  display: block;
+  height: clamp(2.5rem, 5vw, 4.2rem);
+  width: auto;
+  max-width: 100%;
+}
+
+/* "Launching soon": one printed square, then the line */
+.launch {
+  margin-top: 1.4rem;
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+
+.launch::before {
+  content: "";
+  display: inline-block;
+  width: 0.62rem;
+  height: 0.62rem;
+  margin-right: 0.6rem;
+  background: var(--brand);
+  vertical-align: 0.04em;
+}
+
+.launch strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.launch + .actions {
+  margin-top: 1.5rem;
+}
+
+/* three real frames fanned, the middle one on a plate out of register */
+.fan {
+  position: relative;
+  grid-column: 8 / span 5;
+  justify-self: center;
+  width: 100%;
+  max-width: 26rem;
+  aspect-ratio: 1 / 1.1;
+}
+
+.fan img,
+.fan__plate {
+  position: absolute;
+  display: block;
+  width: 46%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+}
+
+.fan__left {
+  left: 1%;
+  top: 10%;
+  transform: rotate(-7deg);
+}
+
+.fan__right {
+  right: 1%;
+  top: 12%;
+  transform: rotate(6.5deg);
+}
+
+.fan__mid {
+  left: 27%;
+  top: 0;
+}
+
+.fan__plate {
+  left: calc(27% + 14px);
+  top: 11px;
+  background: var(--brand);
+}
+
+.frames {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 2rem clamp(0.9rem, 1.8vw, 1.5rem);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  list-style: none;
+}
+
+.frames img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+}
+
+.frames strong {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.frames span {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--ink-mute);
+}
+
+.all-styles {
+  margin-top: 2.25rem;
+  max-width: 62rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--ink-mute);
+}
+
+.steps--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.closing__soft {
+  color: var(--cream);
+}
+
+/* home: Offprint, right under the Cottus hero */
+.feature {
+  align-items: center;
+  row-gap: 2.25rem;
+}
+
+.feature__copy {
+  grid-column: 1 / span 6;
+  min-width: 0;
+}
+
+.feature__lede {
+  margin-top: 1.1rem;
+  max-width: 24ch;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.25;
+}
+
+@media (max-width: 1100px) {
+  .frames {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .steps--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2rem;
+  }
+}
+
 /* not found */
 .lost {
   padding: clamp(4rem, 10vw, 8rem) 0 0;
@@ -1305,6 +1472,27 @@ main + .art {
     gap: 0.5rem;
     padding: 1rem var(--gutter) 1.5rem;
     color: var(--ink-mute);
+  }
+}
+
+@media (max-width: 860px) {
+  .frames {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .steps--4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid > .fan {
+    justify-self: start;
+    max-width: 19rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .frames {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

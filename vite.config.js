@@ -23,6 +23,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: `${root}index.html`,
+        offprint: `${root}offprint/index.html`,
         akernl: `${root}akernl/index.html`,
         runtime: `${root}cottus-runtime/index.html`,
         argus: `${root}argus/index.html`,
