@@ -258,6 +258,7 @@ li code {
   font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 .h3 {
@@ -1205,6 +1206,25 @@ main + .art {
   color: var(--ink);
 }
 
+/* "by Cottus" under the Offprint wordmark, lined up with its first letter */
+.byline {
+  margin-top: 0.55rem;
+  padding-left: calc(clamp(3.4rem, 6.6vw, 5.6rem) + clamp(0.6rem, 1.3vw, 1rem));
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  line-height: 1.2;
+  color: var(--ink-mute);
+}
+
+.byline a {
+  color: var(--cream);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.byline a:hover {
+  color: var(--brand);
+}
+
 .lockup img {
   flex: none;
   width: clamp(3.4rem, 6.6vw, 5.6rem);
@@ -1328,6 +1348,13 @@ main + .art {
 
 .steps--4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* a spot under a section heading, filling the column below it */
+.spot--under {
+  display: block;
+  max-width: 26rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .closing__soft {

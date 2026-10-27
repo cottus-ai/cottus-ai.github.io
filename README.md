@@ -4,7 +4,7 @@
 
 # cottus-ai.github.io
 
-The Cottus AI website: Offprint, Cottus, akernl, Cottus Runtime, argus and the project index.
+The Cottus AI website: Cottus, Offprint, akernl, Cottus Runtime, argus and the project index.
 
 ```sh
 npm install
